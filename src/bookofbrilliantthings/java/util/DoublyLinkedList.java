@@ -21,6 +21,7 @@ public class DoublyLinkedList<T>
 		return firstLink() == null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <E> E[] toArray(E[] a) {
 		if (a == null) {
 			throw new IllegalArgumentException("the array argument must not be null");
