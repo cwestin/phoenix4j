@@ -3,8 +3,6 @@ package bookofbrilliantthings.java.util.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import java.util.Iterator;
-
 import org.junit.Test;
 
 import bookofbrilliantthings.java.util.Iterators;
