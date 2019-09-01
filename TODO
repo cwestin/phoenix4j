@@ -1,0 +1,2 @@
+(*) More testing of DoublyLinkedList, with emphasis on remove() and
+removeUnsafe()
