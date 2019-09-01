@@ -5,17 +5,8 @@ import java.util.Arrays;
 
 import bookofbrilliantthings.java.lang.Iterable;
 
-public class DoublyLinkedList<T>
-		extends DoubleLink<T>
+public class DoublyLinkedList<T> extends PrimordialLink<T>
 		implements Iterable<T> {
-
-	public void unsafeRemove() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
 
 	public boolean isEmpty() {
 		return firstLink() == null;
