@@ -2,8 +2,8 @@ package bookofbrilliantthings.java.util;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
-
-import bookofbrilliantthings.java.lang.Iterable;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class DoublyLinkedList<T> extends PrimordialLink<T>
 		implements Iterable<T> {
@@ -56,11 +56,12 @@ public class DoublyLinkedList<T> extends PrimordialLink<T>
 		return nextLink(this);
 	}
 
-	private static class DoublyLinkedIterator<T> implements Iterator<T> {
+	private static class DoublyLinkedAltIterator<T>
+			implements bookofbrilliantthings.java.util.Iterator<T> {
 		private final DoublyLinkedList<T> list;
 		private DoubleLink<T> currentLink;
 
-		private DoublyLinkedIterator(DoublyLinkedList<T> list) {
+		private DoublyLinkedAltIterator(DoublyLinkedList<T> list) {
 			this.list = list;
 		}
 
@@ -80,8 +81,40 @@ public class DoublyLinkedList<T> extends PrimordialLink<T>
 		}
 	}
 
-	public Iterator<T> iterator()
+	/* TODO(cwestin) */
+	public bookofbrilliantthings.java.util.Iterator<T> altIterator()
 	{
+		return new DoublyLinkedAltIterator<T>(this);
+	}
+
+	private static class DoublyLinkedIterator<T> implements Iterator<T> {
+		private DoubleLink<T> nextLink;
+		private final DoublyLinkedList<T> list;
+
+		public DoublyLinkedIterator(DoublyLinkedList<T> list) {
+			this.list = list;
+			nextLink = list.firstLink();
+		}
+
+		@Override
+		public boolean hasNext() {
+			return nextLink != null;
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+
+			final DoubleLink<T> returnValue = nextLink;
+			nextLink = nextLink.nextLink(list);
+			return returnValue.getOwner();
+		}
+	}
+
+	@Override
+	public Iterator<T> iterator() {
 		return new DoublyLinkedIterator<T>(this);
 	}
 }
