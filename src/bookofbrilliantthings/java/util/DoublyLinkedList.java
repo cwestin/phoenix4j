@@ -2,12 +2,16 @@ package bookofbrilliantthings.java.util;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class DoublyLinkedList<T> extends PrimordialLink<T>
-		implements Iterable<T> {
+import bookofbrilliantthings.java.lang.UnimplementedException;
 
+public class DoublyLinkedList<T> extends PrimordialLink<T>
+		implements Iterable<T>, Collection<T> {
+
+	@Override
 	public boolean isEmpty() {
 		return firstLink() == null;
 	}
@@ -19,10 +23,7 @@ public class DoublyLinkedList<T> extends PrimordialLink<T>
 		}
 
 		// Count the number of elements.
-		int count = 0;
-		for(DoubleLink<T> link = firstLink(); link != null; link = link.nextLink(this)) {
-			++count;
-		}
+		final int count = size();
 
 		/*
 		 *  If the provided array isn't big enough, reallocate it.
@@ -116,5 +117,99 @@ public class DoublyLinkedList<T> extends PrimordialLink<T>
 	@Override
 	public Iterator<T> iterator() {
 		return new DoublyLinkedIterator<T>(this);
+	}
+
+	@Override
+	public int size() {
+		int count = 0;
+		for(DoubleLink<T> link = firstLink(); link != null; link = link.nextLink(this)) {
+			++count;
+		}
+
+		return count;
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		for(DoubleLink<T> link = firstLink(); link != null; link = link.nextLink(this)) {
+			final T owner = link.getOwner();
+			if (owner == o) {
+				return true;
+			}
+		}
+
+		// If we got here, we didn't find it.
+		return false;
+	}
+
+	@Override
+	public Object[] toArray() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean add(T e) {
+		/*
+		 * We need the pointer to the link. This could be done
+		 * with reflection; we could use a method to get the link.
+		 * We could also be given a closure that would return the
+		 * link for an object of type T.
+		 */
+		throw new UnimplementedException();
+	}
+
+	/**
+	 * TODO
+	 * @param link
+	 * @return
+	 */
+	public boolean addLink(DoubleLink<T> link) {
+		addLinkBefore(link);
+		return true;
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		for(DoubleLink<T> link = firstLink(); link != null; link = link.nextLink(this)) {
+			final T owner = link.getOwner();
+			if (owner == o) {
+				link.remove();
+				return true;
+			}
+		}
+
+		// If we got here, we didn't find it.
+		return false;
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends T> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+
 	}
 }
