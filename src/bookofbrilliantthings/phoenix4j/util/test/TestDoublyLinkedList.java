@@ -1,13 +1,13 @@
 package bookofbrilliantthings.java.util.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.fail;
-
 import org.junit.Test;
 
 import bookofbrilliantthings.java.util.DoubleLink;
 import bookofbrilliantthings.java.util.DoublyLinkedList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class TestDoublyLinkedList {
 
@@ -34,7 +34,7 @@ public class TestDoublyLinkedList {
 
 		final MyInt[] zeroArray = new MyInt[0];
 		final MyInt[] array = list.toArray(zeroArray);
-		assertNotSame(array, zeroArray);
+		assertTrue(zeroArray != array);
 		for(int i = 0; i < 10; ++i) {
 			assertEquals("array[" + i + "] == " + array[i], i, array[i].i);
 		}

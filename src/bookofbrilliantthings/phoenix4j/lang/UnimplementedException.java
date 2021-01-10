@@ -1,5 +1,7 @@
 package bookofbrilliantthings.java.lang;
 
+import java.lang.RuntimeException;
+
 public class UnimplementedException extends RuntimeException {
 	/**
 	 *
