@@ -1,4 +1,4 @@
-package bookofbrilliantthings.java.lang;
+package bookofbrilliantthings.phoenix4j.lang;
 
 import java.lang.RuntimeException;
 

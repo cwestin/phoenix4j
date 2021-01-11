@@ -1,9 +1,9 @@
-package bookofbrilliantthings.java.util.test;
+package bookofbrilliantthings.phoenix4j.util.test;
 
 import org.junit.Test;
 
-import bookofbrilliantthings.java.util.DoubleLink;
-import bookofbrilliantthings.java.util.DoublyLinkedList;
+import bookofbrilliantthings.phoenix4j.util.DoubleLink;
+import bookofbrilliantthings.phoenix4j.util.DoublyLinkedList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

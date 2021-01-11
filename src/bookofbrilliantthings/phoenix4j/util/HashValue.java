@@ -1,4 +1,4 @@
-package bookofbrilliantthings.java.util;
+package bookofbrilliantthings.phoenix4j.util;
 
 public class HashValue {
 	private int hash;

@@ -1,13 +1,13 @@
-package bookofbrilliantthings.java.util;
+package bookofbrilliantthings.phoenix4j.util;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-import bookofbrilliantthings.java.lang.Iterable;
+import bookofbrilliantthings.phoenix4j.lang.Moverable;
 
 public class DoublyLinkedList<T>
 		extends DoubleLink<T>
-		implements Iterable<T> {
+		implements Moverable<T> {
 
 	public void unsafeRemove() {
 		throw new UnsupportedOperationException();
@@ -65,11 +65,11 @@ public class DoublyLinkedList<T>
 		return nextLink(this);
 	}
 
-	private static class DoublyLinkedIterator<T> implements Iterator<T> {
+	private static class DoublyLinkedMoverator<T> implements Moverator<T> {
 		private final DoublyLinkedList<T> list;
 		private DoubleLink<T> currentLink;
 
-		private DoublyLinkedIterator(DoublyLinkedList<T> list) {
+		private DoublyLinkedMoverator(DoublyLinkedList<T> list) {
 			this.list = list;
 		}
 
@@ -89,8 +89,8 @@ public class DoublyLinkedList<T>
 		}
 	}
 
-	public Iterator<T> iterator()
+	public Moverator<T> moverator()
 	{
-		return new DoublyLinkedIterator<T>(this);
+		return new DoublyLinkedMoverator<T>(this);
 	}
 }
