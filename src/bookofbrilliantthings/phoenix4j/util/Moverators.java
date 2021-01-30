@@ -86,11 +86,11 @@ public class Moverators {
 		return new ToIterator<>(p);
 	}
 
-	private static class ToMoverator<T> implements Moverator<T> {
+	private static class FromIterator<T> implements Moverator<T> {
 		private final Iterator<T> n;
 		private T current;
 
-		public ToMoverator(Iterator<T> n) {
+		public FromIterator(Iterator<T> n) {
 			this.n = n;
 		}
 
@@ -110,7 +110,7 @@ public class Moverators {
 		}
 	}
 
-	public static <T> Moverator<T> toMoverator(Iterator<T> j) {
-		return new ToMoverator<>(j);
+	public static <T> Moverator<T> fromIterator(Iterator<T> j) {
+		return new FromIterator<>(j);
 	}
 }

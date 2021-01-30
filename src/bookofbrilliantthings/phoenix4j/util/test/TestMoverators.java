@@ -54,7 +54,7 @@ public class TestMoverators {
 
 	@Test
 	public void test_toMoverator() {
-		final Moverator<Integer> moverator = Moverators.toMoverator(new IntegerSequenceIterator(0, 9, 1));
+		final Moverator<Integer> moverator = Moverators.fromIterator(new IntegerSequenceIterator(0, 9, 1));
 		checkIntegerSequenceMoverator(moverator);
 	}
 
@@ -62,7 +62,7 @@ public class TestMoverators {
 	public void test_moverationCheckSequences() {
 		final IntegerSequenceMoverator ism = new IntegerSequenceMoverator(0, 9, 1);
 		final IntegerSequenceIterator is = new IntegerSequenceIterator(0, 9, 1);
-		final Moverator<Integer> isim = Moverators.toMoverator(is);
+		final Moverator<Integer> isim = Moverators.fromIterator(is);
 		Moverators.elementsEqual(ism, isim);
 	}
 }
