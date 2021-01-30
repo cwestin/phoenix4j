@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class TestMoverators {
 
 	@Test
-	public void testIntegerSequenceMoverator() {
+	public void test_IntegerSequenceMoverator() {
 		final IntegerSequenceMoverator is = new IntegerSequenceMoverator(0, 9, 1);
 		int check = 0;
 		while(is.moveToNext()) {
@@ -26,11 +26,10 @@ public class TestMoverators {
 
 	@Test
 	public void test_toIterator() {
-		final IntegerSequenceMoverator is = new IntegerSequenceMoverator(0, 9, 1);
 		final Iterable<Integer> jiterable = new Iterable<Integer>() {
 			@Override
 			public Iterator<Integer> iterator() {
-				return Moverators.toIterator(is);
+				return Moverators.toIterator(new IntegerSequenceMoverator(0, 9, 1));
 			}
 		};
 
@@ -42,7 +41,7 @@ public class TestMoverators {
 		Assert.assertEquals(10, check);
 	}
 
-	public static <T> void assertEquals(Iterator<T> a, Iterator<T> b) {
+	private static <T> void assertEquals(Iterator<T> a, Iterator<T> b) {
 		assertNotNull(a);
 		assertNotNull(b);
 		while(a.hasNext()) {
@@ -53,5 +52,26 @@ public class TestMoverators {
 			Assert.assertEquals(ta, tb);
 		}
 		assertFalse(b.hasNext());
+	}
+
+	@Test
+	public void test_IntegerSequenceIterator() {
+		final IntegerSequenceIterator is = new IntegerSequenceIterator(0, 9, 1);
+		int check = 0;
+		while(is.hasNext()) {
+			final int i = is.next();
+			Assert.assertEquals(i, check);
+			++check;
+		}
+		Assert.assertEquals(10, check);
+		assertFalse(is.hasNext());
+	}
+
+	@Test
+	public void test_crossCheckSequences() {
+		final IntegerSequenceMoverator ism = new IntegerSequenceMoverator(0, 9, 1);
+		final Iterator<Integer> ismi = Moverators.toIterator(ism);
+		final IntegerSequenceIterator is = new IntegerSequenceIterator(0, 9, 1);
+		assertEquals(ismi, is);
 	}
 }
