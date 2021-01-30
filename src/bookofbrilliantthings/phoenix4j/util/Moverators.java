@@ -56,6 +56,35 @@ public class Moverators {
 		return new Filter(moverator, predicate);
 	}
 
+
+	private static class FromIterator<T> implements Moverator<T> {
+		private final Iterator<T> n;
+		private T current;
+
+		public FromIterator(Iterator<T> n) {
+			this.n = n;
+		}
+
+		@Override
+		public boolean moveToNext() {
+			if (!n.hasNext()) {
+				return false;
+			}
+
+			current = n.next();
+			return true;
+		}
+
+		@Override
+		public T getCurrent() {
+			return current;
+		}
+	}
+
+	public static <T> Moverator<T> fromIterator(Iterator<T> j) {
+		return new FromIterator<>(j);
+	}
+
 	private static class ToIterator<T> implements Iterator<T> {
 		private final Moverator<T> p;
 		private boolean hasNext;
@@ -84,33 +113,5 @@ public class Moverators {
 
 	public static <T> Iterator<T> toIterator(Moverator<T> p) {
 		return new ToIterator<>(p);
-	}
-
-	private static class FromIterator<T> implements Moverator<T> {
-		private final Iterator<T> n;
-		private T current;
-
-		public FromIterator(Iterator<T> n) {
-			this.n = n;
-		}
-
-		@Override
-		public boolean moveToNext() {
-			if (!n.hasNext()) {
-				return false;
-			}
-
-			current = n.next();
-			return true;
-		}
-
-		@Override
-		public T getCurrent() {
-			return current;
-		}
-	}
-
-	public static <T> Moverator<T> fromIterator(Iterator<T> j) {
-		return new FromIterator<>(j);
 	}
 }
