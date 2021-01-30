@@ -1,37 +1,59 @@
 package bookofbrilliantthings.phoenix4j.util;
 
+import org.junit.Assert;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
+
+import static org.junit.Assert.*;
 
 public class Moverators {
 	private Moverators() {}
 
-	private static class ToMoverator<T> implements Moverator<T> {
-		private final Iterator<T> n;
-		private T current;
+	public static <T> void elementsEqual(Moverator<T> a, Moverator<T> b) {
+		assertNotNull(a);
+		assertNotNull(b);
+		while(a.moveToNext()) {
+			assertTrue(b.moveToNext());
 
-		public ToMoverator(Iterator<T> n) {
-			this.n = n;
+			final T ta = a.getCurrent();
+			final T tb = b.getCurrent();
+			Assert.assertEquals(ta, tb);
+		}
+		assertFalse(b.moveToNext());
+	}
+
+	private static class Filter<T>
+			implements Moverator<T> {
+		private final Moverator<T> moverator;
+		private final Predicate<T> predicate;
+
+		public Filter(Moverator<T> moverator, Predicate<T> predicate) {
+			this.moverator = moverator;
+			this.predicate = predicate;
 		}
 
 		@Override
 		public boolean moveToNext() {
-			if (!n.hasNext()) {
-				return false;
+			while(moverator.moveToNext()) {
+				final T current = moverator.getCurrent();
+				if (predicate.test(current)) {
+					return true;
+				}
 			}
 
-			current = n.next();
-			return true;
+			return false;
 		}
 
 		@Override
 		public T getCurrent() {
-			return current;
+			return moverator.getCurrent();
 		}
 	}
 
-	public static <T> Moverator<T> toMoverator(Iterator<T> j) {
-		return new ToMoverator<>(j);
+	public static <T> Moverator<T> filter(Moverator<T> moverator, Predicate<T> predicate) {
+		return new Filter(moverator, predicate);
 	}
 
 	private static class ToIterator<T> implements Iterator<T> {
@@ -62,5 +84,33 @@ public class Moverators {
 
 	public static <T> Iterator<T> toIterator(Moverator<T> p) {
 		return new ToIterator<>(p);
+	}
+
+	private static class ToMoverator<T> implements Moverator<T> {
+		private final Iterator<T> n;
+		private T current;
+
+		public ToMoverator(Iterator<T> n) {
+			this.n = n;
+		}
+
+		@Override
+		public boolean moveToNext() {
+			if (!n.hasNext()) {
+				return false;
+			}
+
+			current = n.next();
+			return true;
+		}
+
+		@Override
+		public T getCurrent() {
+			return current;
+		}
+	}
+
+	public static <T> Moverator<T> toMoverator(Iterator<T> j) {
+		return new ToMoverator<>(j);
 	}
 }
